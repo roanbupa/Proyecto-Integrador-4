@@ -1,10 +1,15 @@
 import TodoForm from '../components/TodoForm'
+import TodoList from '../components/TodoList'
 import { useAuth } from '../features/auth/AuthContext'
+import { useTasks } from '../hooks/useTasks'
 import { logoutUser } from '../services/auth'
 
 export default function Tasks() {
     // Obtenemos el usuario autenticado desde el contexto.
     const { user } = useAuth()
+
+    // Escuchamos en tiempo real las tareas del usuario.
+    const { tasks, loading, error } = useTasks(user?.uid)
 
     // Cierra la sesión del usuario mediante Firebase.
     const handleLogout = async () => {
@@ -19,9 +24,17 @@ export default function Tasks() {
                 Cerrar sesión
             </button>
 
-            {/* El formulario necesita el ID del usuario
-                para asociar la tarea con su propietario. */}
+            {/* Formulario para crear tareas. */}
             {user && <TodoForm userId={user.uid} />}
+
+            {/* Estado de carga de Firestore. */}
+            {loading && <p>Cargando tareas...</p>}
+
+            {/* Error al obtener las tareas. */}
+            {error && <p>{error}</p>}
+
+            {/* Mostramos la lista cuando terminó la carga. */}
+            {!loading && !error && <TodoList tasks={tasks} />}
         </main>
     )
 }
