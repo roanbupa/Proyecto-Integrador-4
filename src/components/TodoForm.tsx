@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { createTask } from '../services/tasks'
+import './TodoForm.css'
 
 interface TodoFormProps {
     // Usuario autenticado al que pertenecerá la tarea.
@@ -47,8 +48,8 @@ export default function TodoForm({ userId }: TodoFormProps) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form className="todo-form" onSubmit={handleSubmit}>
+            <div className="todo-form-group">
                 <label htmlFor="title">Título</label>
 
                 <input
@@ -56,24 +57,35 @@ export default function TodoForm({ userId }: TodoFormProps) {
                     type="text"
                     value={title}
                     onChange={(event) => setTitle(event.target.value)}
+                    placeholder="Ej: Preparar presentación"
                     required
                 />
             </div>
 
-            <div>
+            <div className="todo-form-group">
                 <label htmlFor="description">Descripción</label>
 
                 <textarea
                     id="description"
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
+                    placeholder="Describí la tarea..."
+                    rows={4}
                     required
                 />
             </div>
 
-            {error && <p>{error}</p>}
+            {error && (
+                <p className="form-error" role="alert">
+                    {error}
+                </p>
+            )}
 
-            <button type="submit" disabled={loading}>
+            <button
+                className="primary-button todo-form-button"
+                type="submit"
+                disabled={loading}
+            >
                 {loading ? 'Creando...' : 'Crear tarea'}
             </button>
         </form>

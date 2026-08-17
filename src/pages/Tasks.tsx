@@ -3,6 +3,7 @@ import TodoList from '../components/TodoList'
 import { useAuth } from '../features/auth/AuthContext'
 import { useTasks } from '../hooks/useTasks'
 import { logoutUser } from '../services/auth'
+import './Tasks.css'
 
 export default function Tasks() {
     // Obtenemos el usuario autenticado desde el contexto.
@@ -17,24 +18,45 @@ export default function Tasks() {
     }
 
     return (
-        <main>
-            <h1>Mis tareas</h1>
+        <main className="tasks-page">
+            <header className="tasks-header">
+                <div>
+                    <p className="tasks-brand">MateCode</p>
+                    <h1>Mis tareas</h1>
+                </div>
 
-            <button type="button" onClick={handleLogout}>
-                Cerrar sesión
-            </button>
+                <button
+                    className="secondary-button"
+                    type="button"
+                    onClick={handleLogout}
+                >
+                    Cerrar sesión
+                </button>
+            </header>
 
-            {/* Formulario para crear tareas. */}
-            {user && <TodoForm userId={user.uid} />}
+            <section className="tasks-content">
+                {/* Formulario para crear tareas. */}
+                <section className="tasks-panel">
+                    <h2>Nueva tarea</h2>
 
-            {/* Estado de carga de Firestore. */}
-            {loading && <p>Cargando tareas...</p>}
+                    {user && <TodoForm userId={user.uid} />}
+                </section>
 
-            {/* Error al obtener las tareas. */}
-            {error && <p>{error}</p>}
+                <section className="tasks-panel">
+                    {/* Estado de carga de Firestore. */}
+                    {loading && <p>Cargando tareas...</p>}
 
-            {/* Mostramos la lista cuando terminó la carga. */}
-            {!loading && !error && <TodoList tasks={tasks} />}
+                    {/* Error al obtener las tareas. */}
+                    {error && (
+                        <p className="form-error" role="alert">
+                            {error}
+                        </p>
+                    )}
+
+                    {/* Mostramos la lista cuando terminó la carga. */}
+                    {!loading && !error && <TodoList tasks={tasks} />}
+                </section>
+            </section>
         </main>
     )
 }

@@ -1,5 +1,6 @@
 import TodoItem from './TodoItem'
 import type { Task } from '../types/task'
+import './TodoList.css'
 
 interface TodoListProps {
     // Lista de tareas que vamos a mostrar.
@@ -16,7 +17,7 @@ export default function TodoList({ tasks }: TodoListProps) {
         <section>
             <h2>Lista de tareas</h2>
 
-            <ul>
+            <ul className="todo-list">
                 {/* Cada tarea se delega a TodoItem,
             que maneja sus propias acciones. */}
                 {tasks.map((task) => (

@@ -1,0 +1,90 @@
+/* Página principal de tareas */
+.tasks-page {
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Encabezado superior */
+.tasks-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.tasks-brand {
+    margin-bottom: 4px;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.tasks-header h1 {
+    margin-bottom: 0;
+    font-size: 2rem;
+}
+
+/* Contenido principal */
+.tasks-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Panel reutilizable */
+.tasks-panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+}
+
+.tasks-panel h2 {
+    margin-bottom: 16px;
+}
+
+/* Botón secundario */
+.secondary-button {
+    align-self: flex-start;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.secondary-button:hover {
+    border-color: var(--color-primary);
+    background-color: #f9fafb;
+}
+
+/* Tablet y escritorio */
+@media (min-width: 768px) {
+    .tasks-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px;
+    }
+
+    .tasks-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .secondary-button {
+        align-self: auto;
+    }
+
+    .tasks-content {
+        gap: 24px;
+    }
+
+    .tasks-panel {
+        padding: 24px;
+    }
+}

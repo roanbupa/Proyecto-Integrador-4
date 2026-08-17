@@ -1,0 +1,109 @@
+/* Página de autenticación centrada y mobile-first */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* Tarjeta principal del login */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
+}
+
+/* Encabezado del formulario */
+.auth-header {
+    margin-bottom: 24px;
+}
+
+.auth-brand {
+    margin-bottom: 8px;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.auth-header h1 {
+    margin-bottom: 8px;
+    font-size: 2rem;
+}
+
+.auth-header p {
+    color: var(--color-text-muted);
+}
+
+/* Formulario */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Agrupa label + campo */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+/* Campos de entrada */
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+.form-group input:focus {
+    border-color: var(--color-primary);
+}
+
+/* Error del formulario */
+.form-error {
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--color-danger);
+    background-color: #fef2f2;
+}
+
+/* Botón principal reutilizable */
+.primary-button {
+    width: 100%;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.primary-button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* Texto inferior */
+.auth-footer {
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+/* Ajustes para pantallas más grandes */
+@media (min-width: 768px) {
+    .auth-card {
+        padding: 32px;
+    }
+}
