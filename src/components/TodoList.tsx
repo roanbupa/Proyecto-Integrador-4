@@ -1,3 +1,4 @@
+import TodoItem from './TodoItem'
 import type { Task } from '../types/task'
 
 interface TodoListProps {
@@ -16,16 +17,10 @@ export default function TodoList({ tasks }: TodoListProps) {
             <h2>Lista de tareas</h2>
 
             <ul>
+                {/* Cada tarea se delega a TodoItem,
+            que maneja sus propias acciones. */}
                 {tasks.map((task) => (
-                    <li key={task.id}>
-                        <h3>{task.title}</h3>
-
-                        <p>{task.description}</p>
-
-                        <p>
-                            Estado: {task.completed ? 'Completada' : 'Pendiente'}
-                        </p>
-                    </li>
+                    <TodoItem key={task.id} task={task} />
                 ))}
             </ul>
         </section>
