@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/auth'
 
 export default function Login() {
@@ -7,6 +8,7 @@ export default function Login() {
     const [password, setPassword] = useState('')
 
     const [error, setError] = useState('') // Guarda un posible mensaje de error
+    const navigate = useNavigate()
 
     // Procesa el formulario de incio de sesión
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -16,6 +18,8 @@ export default function Login() {
         try {
             // Intentamos iniciar sesión mediante Firebase
             await loginUser(email, password)
+            // Redirige al área privada después de iniciar sesión correctamente.
+            navigate('/tasks')
         } catch (error) {
             // Mostramos un mensaje si Firebase rechaza las credenciales
             setError('Email o contraseña incorrecta')
@@ -54,6 +58,9 @@ export default function Login() {
                 {error && <p>{error}</p>}
 
                 <button type="submit">Iniciar sesión</button>
+                <p>
+                    ¿No tenés una cuenta? <Link to="/login/register">Crear cuenta</Link>
+                </p>
             </form>
         </main>
     )

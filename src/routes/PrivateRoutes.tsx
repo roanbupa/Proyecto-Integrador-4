@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '../features/auth/AuthContext'
+import Tasks from '../pages/Tasks'
 
 export default function PrivateRoutes() {
     const { user, loading } = useAuth()
@@ -18,7 +19,7 @@ export default function PrivateRoutes() {
         <Routes>
             {/* Página privada temporal.
           Más adelante será reemplazada por el dashboard/tareas. */}
-            <Route index element={<p>Usuario autenticado</p>} />
+            <Route path="tasks" element={<Tasks />} />
 
             {/* Cualquier ruta privada desconocida vuelve al inicio. */}
             <Route path="*" element={<Navigate to="/" replace />} />

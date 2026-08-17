@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { registerUser } from '../services/auth'
 
 export default function Register() {
@@ -55,6 +56,9 @@ export default function Register() {
         {error && <p>{error}</p>}
 
         <button type="submit">Crear cuenta</button>
+        <p>
+          ¿Ya tenés una cuenta? <Link to="/login">Iniciar sesión</Link>
+        </p>
       </form>
     </main>
   )
