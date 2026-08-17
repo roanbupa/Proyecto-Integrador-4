@@ -2,55 +2,80 @@ import { useEffect, useState } from 'react'
 import type { Task } from '../types/task'
 import { subscribeToTasks } from '../services/tasks'
 
+// Estado interno asociado al usuario cuyas tareas fueron recibidas.
+interface TasksState {
+    userId: string | undefined
+    tasks: Task[]
+    loading: boolean
+    error: string
+}
+
 // Hook encargado de mantener sincronizadas las tareas
 // del usuario autenticado con Cloud Firestore.
 export function useTasks(userId: string | undefined) {
-    // Lista actual de tareas.
-    const [tasks, setTasks] = useState<Task[]>([])
-
-    // Indica si todavía estamos esperando la primera respuesta
-    // de Firestore.
-    const [loading, setLoading] = useState(true)
-
-    // Guarda un posible error de lectura/sincronización.
-    const [error, setError] = useState('')
+    const [state, setState] = useState<TasksState>({
+        userId: undefined,
+        tasks: [],
+        loading: true,
+        error: '',
+    })
 
     useEffect(() => {
-        // Si no hay usuario autenticado, limpiamos el estado
-        // y no creamos ninguna suscripción.
+        // Sin usuario autenticado no necesitamos
+        // crear ninguna suscripción a Firestore.
         if (!userId) {
-            setTasks([])
-            setLoading(false)
-            setError('')
             return
         }
 
-        // Cada vez que cambia el usuario empezamos una nueva carga.
-        setLoading(true)
-        setError('')
-
-        // Nos suscribimos en tiempo real a las tareas
-        // correspondientes solamente a este usuario.
+        // Nos suscribimos en tiempo real solamente
+        // a las tareas pertenecientes a este usuario.
         const unsubscribe = subscribeToTasks(
             userId,
             (updatedTasks) => {
-                setTasks(updatedTasks)
-                setLoading(false)
+                setState({
+                    userId,
+                    tasks: updatedTasks,
+                    loading: false,
+                    error: '',
+                })
             },
             () => {
-                setError('No se pudieron cargar las tareas.')
-                setLoading(false)
+                setState({
+                    userId,
+                    tasks: [],
+                    loading: false,
+                    error: 'No se pudieron cargar las tareas.',
+                })
             },
         )
 
-        // Cancelamos la suscripción cuando el componente se desmonta
-        // o cuando cambia el usuario, evitando memory leaks.
+        // Cancelamos la suscripción cuando cambia el usuario
+        // o cuando el componente se desmonta.
         return unsubscribe
     }, [userId])
 
+    // Si no existe usuario, devolvemos un estado vacío.
+    if (!userId) {
+        return {
+            tasks: [],
+            loading: false,
+            error: '',
+        }
+    }
+
+    // Si cambió el usuario y todavía no llegaron sus datos,
+    // evitamos mostrar las tareas del usuario anterior.
+    if (state.userId !== userId) {
+        return {
+            tasks: [],
+            loading: true,
+            error: '',
+        }
+    }
+
     return {
-        tasks,
-        loading,
-        error,
+        tasks: state.tasks,
+        loading: state.loading,
+        error: state.error,
     }
 }

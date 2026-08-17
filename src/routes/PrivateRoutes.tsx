@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useAuth } from '../features/auth/AuthContext'
+import { useAuth } from '../hooks/useAuth'
 import Tasks from '../pages/Tasks'
 
 export default function PrivateRoutes() {

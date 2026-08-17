@@ -1,39 +1,19 @@
-// Importamos los elementos necesarios de React para crear
-// y utilizar nuestro contexto de autenticación.
 import {
-    createContext,
-    useContext,
     useEffect,
     useState,
     type ReactNode,
 } from 'react'
 
-// Importamos el tipo User y el listener de Firebase Authentication.
 import {
     onAuthStateChanged,
     type User,
 } from 'firebase/auth'
 
-// Importamos nuestra instancia de Authentication.
 import { auth } from '../../services/firebase'
-
-// Define qué información estará disponible
-// para los componentes que utilicen nuestro contexto.
-interface AuthContextType {
-    // Usuario actualmente autenticado.
-    user: User | null
-
-    // Indica si Firebase todavía está comprobando
-    // si existe una sesión activa.
-    loading: boolean
-}
-
-// Creamos el contexto de autenticación.
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+import { AuthContext } from './AuthContextDefinition'
 
 // Props que recibe nuestro proveedor de autenticación.
 interface AuthProviderProps {
-    // Elementos que estarán dentro del AuthProvider.
     children: ReactNode
 }
 
@@ -68,18 +48,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
             {children}
         </AuthContext.Provider>
     )
-}
-
-// Hook personalizado para acceder fácilmente
-// al contexto de autenticación.
-export function useAuth() {
-    const context = useContext(AuthContext)
-
-    // Si el hook se utiliza fuera del AuthProvider,
-    // lanzamos un error para detectar el problema rápidamente.
-    if (!context) {
-        throw new Error('useAuth debe utilizarse dentro de AuthProvider')
-    }
-
-    return context
 }
