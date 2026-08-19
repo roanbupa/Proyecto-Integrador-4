@@ -88,3 +88,42 @@
         padding: 24px;
     }
 }
+
+/* Encabezado del panel de resumen de tareas */
+.tasks-summary-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.tasks-summary-header h2 {
+    margin-bottom: 0;
+}
+
+/* Botón para enviar el resumen */
+.summary-button {
+    width: 100%;
+}
+
+/* Mensaje de éxito */
+.form-success {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    background-color: #ecfdf5;
+    color: #047857;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    .tasks-summary-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .summary-button {
+        width: auto;
+    }
+}
