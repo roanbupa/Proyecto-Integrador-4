@@ -6,14 +6,23 @@ export default function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                {/* Todas las rutas de autenticación */}
-                <Route path="/login/*" element={<AuthRoutes />} />
+                {/* Al entrar a la aplicación, redirige al login */}
+                <Route
+                    path="/"
+                    element={<Navigate to="/login" replace />}
+                />
 
-                {/* Todas las rutas privadas */}
-                <Route path="/*" element={<PrivateRoutes />} />
+                {/* Rutas relacionadas con autenticación */}
+                <Route
+                    path="/login/*"
+                    element={<AuthRoutes />}
+                />
 
-                {/* Ruta de respaldo */}
-                <Route path="*" element={<Navigate to="/login" replace />} />
+                {/* Rutas privadas de la aplicación */}
+                <Route
+                    path="/*"
+                    element={<PrivateRoutes />}
+                />
             </Routes>
         </BrowserRouter>
     )
